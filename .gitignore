@@ -1,0 +1,15 @@
+nvim/.config/nvim/lazy-lock.json
+
+# Logs, temp files, or user state
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+*.old
+
+.env
+.secret
+.private
+

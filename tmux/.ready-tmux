@@ -1,0 +1,9 @@
+#!/bin/bash
+
+tmux rename-window "editor"
+tmux send-keys -t . "nvim ." C-m
+
+tmux neww -n shell
+
+tmux select-window -t :editor
+

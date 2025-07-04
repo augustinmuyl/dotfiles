@@ -1,0 +1,28 @@
+!/bin/bash
+
+selected=$(printf "%s\n" ~/dev $(fd -t d . ~/dev/) | fzf)
+if [[ -z "$selected" ]]; then
+	exit 0
+fi
+
+parent_dir=$(basename "$(dirname "$selected")")
+current_dir=$(basename "$selected")
+selected_name="${parent_dir}_${current_dir}"
+
+switchTo() {
+	if [[ -z "$TMUX" ]]; then
+		tmux attach-session -t $selected_name
+	else
+		tmux switch-client -t $selected_name
+	fi
+}
+
+if tmux has-session -t=$selected_name 2> /dev/null; then
+	switchTo
+	exit 0
+fi
+
+tmux new-session -ds $selected_name -c $selected
+switchTo
+tmux send-keys -t $selected_name "~/.ready-tmux" ^M
+

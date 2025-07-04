@@ -1,0 +1,31 @@
+# Switch between windows within a space
+alt - h: yabai -m window --focus west
+alt - l: yabai -m window --focus east
+alt - j: yabai -m window --focus south
+alt - k: yabai -m window --focus north
+
+# Move windows around within a space
+shift + alt - h: yabai -m window --swap west
+shift + alt - l: yabai -m window --swap east
+shift + alt - j: yabai -m window --swap south
+shift + alt - k: yabai -m window --swap north
+
+# Toggle window float
+shift + alt - t: yabai -m window --toggle float --grid 4:4:1:1:2:2
+
+# Make window fullscreen
+shift + alt - m: yabai -m window --toggle zoom-fullscreen
+
+# Open Apps
+alt - s: open -a "Arc"
+alt - d: open -a "iTerm"
+alt - n: open -a "TickTick"
+
+alt - 1: yabai -m space --focus 1
+alt - 2: yabai -m space --focus 2
+alt - 3: yabai -m space --focus 3
+alt - 4: yabai -m space --focus 4
+alt - 5: yabai -m space --focus 5
+alt - 6: yabai -m space --focus 6
+alt - 7: yabai -m space --focus 7
+

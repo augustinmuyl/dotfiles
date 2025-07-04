@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ -x "$HOME/bin/ready-tmux" ]]; then
+	"$HOME/dev/dotfiles/ready-tmux"
+elif [[ -x "$HOME/.ready-tmux" ]]; then
+	"$HOME/.ready-tmux"
+fi
+clear
