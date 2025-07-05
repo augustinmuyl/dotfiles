@@ -1,4 +1,4 @@
-!/bin/bash
+#!/usr/bin/env bash
 
 selected=$(printf "%s\n" ~/dev $(fd -t d . ~/dev/) | fzf)
 if [[ -z "$selected" ]]; then

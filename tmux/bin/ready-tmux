@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [[ -x "$HOME/bin/ready-tmux" ]]; then
 	"$HOME/dev/dotfiles/ready-tmux"
