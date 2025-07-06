@@ -1,7 +1,21 @@
 #!/usr/bin/env bash
 
+# Check if venv exists
+if [[ -f "./backend/.venv/bin/activate" ]]; then
+	VENV_ACTIVATE_CMD="source ./backend/.venv/bin/activate"
+elif [[ -f "./.venv/bin/activate" ]]; then
+	VENV_ACTIVATE_CMD="source ./.venv/bin/activate"
+else
+	VENV_ACTIVATE_CMD=""
+fi
+
 tmux rename-window "editor"
-tmux send-keys -t . "nvim" C-m
+
+if [[ -n "$VENV_ACTIVATE_CMD" ]]; then
+	tmux send-keys -t . "$VENV_ACTIVATE_CMD && nvim" C-m
+else
+	tmux send-keys -t . "nvim" C-m
+fi
 
 tmux neww -n shell
 
