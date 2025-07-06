@@ -117,6 +117,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# aliases
+alias git-init='git init "$@" && ~/bin/tmux-sessionizer --refresh'
+alias ruff-init='cp ~/.config/ruff/pyproject.toml ./'
+
 export TERM="xterm-256color"
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 

@@ -1,6 +1,51 @@
 #!/usr/bin/env bash
 
-selected=$(printf "%s\n" ~/dev $(fd -t d . ~/dev/) | fzf)
+
+CACHE_FILE="$HOME/.cache/tmux-sessionizer/git-repos"
+CACHE_TTL=$((60 * 60 * 24)) # 1 day
+mkdir -p "$(dirname "$CACHE_FILE")"
+
+GIT_ONLY=false
+REFRESH_ONLY=false
+
+case "${1:-}" in
+  -g|--git) GIT_ONLY=true ;;
+  --refresh) REFRESH_ONLY=true ;;
+esac
+
+# Refresh func (--refresh)
+refresh_git_cache() {
+  echo "Refreshing Git repo cache..."
+  find ~/dev -type d -name .git -prune -exec dirname {} \; | sort -u > "$CACHE_FILE"
+}
+
+# Manual refresh
+if $REFRESH_ONLY; then
+  refresh_git_cache
+  echo "Cache updated."
+  exit 0
+fi
+
+# Get directory list
+if $GIT_ONLY; then
+  now=$(date +%s)
+  last_updated=$(stat -f %m "$CACHE_FILE" 2>/dev/null || stat -c %Y "$CACHE_FILE" 2>/dev/null || echo 0)
+  age=$((now - last_updated))
+
+  if [[ $age -gt $CACHE_TTL ]]; then
+    refresh_git_cache
+  fi
+
+  dirs=$(cat "$CACHE_FILE")
+else
+  if command -v fd &>/dev/null; then
+    dirs=$(fd -t d . ~/dev/)
+  else
+    dirs=$(find ~/dev -type d)
+  fi
+fi
+
+selected=$(printf "%s\n" ~/dev $dirs | fzf)
 if [[ -z "$selected" ]]; then
 	exit 0
 fi
@@ -11,18 +56,18 @@ selected_name="${parent_dir}_${current_dir}"
 
 switchTo() {
 	if [[ -z "$TMUX" ]]; then
-		tmux attach-session -t $selected_name
+		tmux attach-session -t "$selected_name"
 	else
-		tmux switch-client -t $selected_name
+		tmux switch-client -t "$selected_name"
 	fi
 }
 
-if tmux has-session -t=$selected_name 2> /dev/null; then
+if tmux has-session -t="$selected_name" 2> /dev/null; then
 	switchTo
 	exit 0
 fi
 
-tmux new-session -ds $selected_name -c $selected
+tmux new-session -ds "$selected_name" -c "$selected"
 switchTo
-tmux send-keys -t $selected_name "~/.ready-tmux" ^M
+tmux send-keys -t "$selected_name" "~/.ready-tmux" C-m
 
