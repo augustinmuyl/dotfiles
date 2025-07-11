@@ -19,5 +19,9 @@ fi
 
 tmux neww -n shell
 
+if [[ -n "$VENV_ACTIVATE_CMD" ]]; then
+  tmux send-keys -t . "$VENV_ACTIVATE_CMD" C-m
+fi
+
 tmux select-window -t :editor
 
