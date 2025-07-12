@@ -139,3 +139,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# Tmux auto-attach
+# ~/.zshrc  ─ attach if a session exists, otherwise create it
+if command -v tmux >/dev/null 2>&1 && [[ -z $TMUX ]]; then
+  exec tmux new-session -A -s main   # -A = attach if exists, else create
+fi
