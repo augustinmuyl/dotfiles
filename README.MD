@@ -4,14 +4,15 @@ A repo for my personal dotfiles setup.
 
 ## Structure
 
-```
+```text
 .
+├── ghostty
 ├── git
 ├── nvim
 ├── ruff
 ├── skhd
 ├── tmux
-│   └── bin
+│   └── bin
 ├── yabai
 └── zsh
 ```
@@ -40,7 +41,7 @@ chmod +x tmux/bin/tmux-sessionizer
 ### 3. Symlink the configs
 
 ```bash
-stow -t ~ git nvim ruff skhd tmux yabai zsh
+stow -t ~ git nvim ruff skhd tmux yabai zsh ghostty
 ```
-> Requires [GNU Stow](https://www.gnu.org/software/stow/) – install with `brew install stow`
 
+> Requires [GNU Stow](https://www.gnu.org/software/stow/) – install with `brew install stow`
