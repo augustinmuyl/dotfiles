@@ -18,7 +18,7 @@ shift + alt - m: yabai -m window --toggle zoom-fullscreen
 
 # Open Apps
 alt - s: open -a "Arc"
-alt - d: open -a "iTerm"
+alt - d: open -a "Ghostty"
 # alt - n: open -a "TickTick"
 
 alt - 1: yabai -m space --focus 1
