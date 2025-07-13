@@ -121,7 +121,7 @@ source $ZSH/oh-my-zsh.sh
 alias git-init='git init "$@" && ~/bin/tmux-sessionizer --refresh'
 alias ruff-init='cp ~/.config/ruff/pyproject.toml ./'
 
-export TERM="xterm-256color"
+export TERM="tmux-256color"
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 # Set up fzf key bindings and fuzzy completion
