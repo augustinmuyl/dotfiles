@@ -19,7 +19,16 @@ A repo for my personal dotfiles setup.
 
 ## Initialization
 
-To set up the environment on a new machine:
+To set up the environment on a new machine (macOS):
+
+### Prerequisites
+
+- [`neovim`](https://neovim.io/)
+- [`tmux`](https://github.com/tmux/tmux/wiki)
+- [`fzf`](https://github.com/junegunn/fzf)
+- [`stow`](https://www.gnu.org/software/stow/)
+
+> Installation via [`Homebrew`](https://brew.sh/) recommended
 
 ### 1. Clone the repo
 
@@ -44,4 +53,8 @@ chmod +x tmux/bin/tmux-sessionizer
 stow -t ~ git nvim ruff skhd tmux yabai zsh ghostty
 ```
 
-> Requires [GNU Stow](https://www.gnu.org/software/stow/) – install with `brew install stow`
+### 4. Set up the LaunchAgent
+
+```bash
+~/bin/setup-tmux-launchagent
+```
