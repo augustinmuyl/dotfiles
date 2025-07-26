@@ -45,7 +45,26 @@ else
   fi
 fi
 
-selected=$(printf "%s\n" ~/dev $dirs | fzf)
+if $GIT_ONLY; then
+  selected=$(awk -F/ '{print $NF "\t" $0}' "$CACHE_FILE" | \
+    fzf --with-nth=1 --delimiter='\t' \
+        --preview='bat --style=plain --color=always {2}/README.md || git -C {2} log -1 --oneline || echo "No README or Git history"' \
+        --preview-window=right:60%:hidden \
+        --prompt=" Git repos > " \
+        --header="Press CTRL-P to toggle preview" \
+        --bind "ctrl-p:toggle-preview")
+
+  selected=$(awk -F'\t' '{print $2}' <<< "$selected")
+else
+  selected=$(printf "%s\n" ~/dev $dirs | \
+    fzf --preview='echo {}' \
+        --preview-window=right:60%:hidden \
+        --prompt="📁 Directories > " \
+        --header="Press CTRL-P to toggle preview" \
+        --bind "ctrl-p:toggle-preview")
+fi
+#selected=$(printf "%s\n" ~/dev $dirs | fzf)
+[[ -z "$selected" ]] && exit 0
 if [[ -z "$selected" ]]; then
 	exit 0
 fi
