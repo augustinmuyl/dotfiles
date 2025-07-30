@@ -210,7 +210,7 @@ vim.keymap.set('n', '<leader>pc', ':Ex<CR>')
 vim.keymap.set('n', '<leader>pw', ':w<CR>')
 
 -- fzf/tmux search and switch to Directory
-vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww "~/dev/dotfiles/.local/bin/tmux-sessionizer"<CR>')
+vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww "~/bin/tmux-sessionizer -g"<CR>')
 
 -- Ctrl C to Esc
 vim.keymap.set('i', '<C-c>', '<Esc>', { noremap = true, silent = true })
