@@ -557,12 +557,15 @@ require('lazy').setup({
         ensure_installed = ensure_installed,
       }
 
-      -- Manually setup each LSP server without mason-lspconfig
-      local lspconfig = require 'lspconfig'
+      -- servers is your { ["server_name"] = {opts...}, ... } table
       for server_name, server_config in pairs(servers) do
-        local server = server_config or {}
-        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-        lspconfig[server_name].setup(server)
+        local server = vim.tbl_deep_extend('force', {}, { capabilities = capabilities }, server_config or {})
+
+        -- register/extend this server's config
+        vim.lsp.config(server_name, server)
+
+        -- enable it (attach for matching buffers / root markers)
+        vim.lsp.enable(server_name)
       end
 
       -- LSP Attach autocommand
