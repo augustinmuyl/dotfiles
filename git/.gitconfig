@@ -9,3 +9,5 @@
 	directory = /Users/augustin/dev/dotfiles/.config/nvim
 [core]
 	excludesFile = /Users/augustin/.gitignore_global
+[coderabbit]
+	machineId = cli/e2766f3ba593439ca545a9be2cd368b4
