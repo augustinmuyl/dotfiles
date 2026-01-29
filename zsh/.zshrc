@@ -148,3 +148,4 @@ if command -v tmux >/dev/null 2>&1 && [[ -z $TMUX ]]; then
     exec tmux new-session -s main 'yabai --restart-service && fastfetch; exec zsh -l'
   fi
 fi
+export PATH="/opt/homebrew/bin:$PATH"

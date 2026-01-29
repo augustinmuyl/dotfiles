@@ -531,7 +531,13 @@ require('lazy').setup({
         tailwindcss = {},
         html = {},
         cssls = {},
-        eslint = {},
+        eslint = {
+          settings = {
+            eslint = {
+              experimental = { useFlatConfig = false },
+            },
+          },
+        },
         pyright = {},
       }
 
