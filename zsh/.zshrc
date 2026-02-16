@@ -149,3 +149,25 @@ if command -v tmux >/dev/null 2>&1 && [[ -z $TMUX ]]; then
   fi
 fi
 export PATH="/opt/homebrew/bin:$PATH"
+
+timewday() {
+  local start end
+
+  # Current time in seconds
+  local now=$(date +%s)
+
+  # Today at 06:00
+  local today_6am=$(date -j -f "%Y-%m-%d %H:%M" "$(date +%Y-%m-%d) 06:00" +%s)
+
+  if (( now < today_6am )); then
+    # Before 6am → day started yesterday at 6am
+    start=$(date -j -v-1d -f "%Y-%m-%d %H:%M" "$(date +%Y-%m-%d) 06:00" "+%Y-%m-%dT%H:%M")
+    end=$(date -j -f "%Y-%m-%d %H:%M" "$(date +%Y-%m-%d) 06:00" "+%Y-%m-%dT%H:%M")
+  else
+    # After 6am → day started today at 6am
+    start=$(date -j -f "%Y-%m-%d %H:%M" "$(date +%Y-%m-%d) 06:00" "+%Y-%m-%dT%H:%M")
+    end=$(date -j -v+1d -f "%Y-%m-%d %H:%M" "$(date +%Y-%m-%d) 06:00" "+%Y-%m-%dT%H:%M")
+  fi
+
+  timew day "$start" - "$end"
+}
