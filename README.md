@@ -10,6 +10,7 @@ A repo for my personal dotfiles setup.
 ├── git
 ├── nvim
 ├── ruff
+├── scripts
 ├── skhd
 ├── tmux
 │   └── bin
@@ -27,33 +28,54 @@ To set up the environment on a new machine (macOS):
 - [`tmux`](https://github.com/tmux/tmux/wiki)
 - [`fzf`](https://github.com/junegunn/fzf)
 - [`stow`](https://www.gnu.org/software/stow/)
+- [`ripgrep`](https://github.com/BurntSushi/ripgrep)
+- [`fd`](https://github.com/sharkdp/fd)
+- [`bat`](https://github.com/sharkdp/bat)
+- [`yabai`](https://github.com/koekeishiya/yabai)
+- [`skhd`](https://github.com/koekeishiya/skhd)
+- [`fastfetch`](https://github.com/fastfetch-cli/fastfetch)
+- [`pyenv`](https://github.com/pyenv/pyenv)
+- [`rbenv`](https://github.com/rbenv/rbenv)
+- [`nvm`](https://github.com/nvm-sh/nvm)
+- [`timewarrior`](https://timewarrior.net/)
+- [`ruff`](https://docs.astral.sh/ruff/)
+- [`markdownlint-cli`](https://github.com/igorshubovych/markdownlint-cli)
+- [`tinymist`](https://github.com/Myriad-Dreamin/tinymist)
+- [`unzip`](https://infozip.sourceforge.net/)
+- [`pure`](https://github.com/sindresorhus/pure)
 
-> Installation via [`Homebrew`](https://brew.sh/) recommended
+Install the command-line tools via [Homebrew](https://brew.sh/):
+
+```bash
+brew install neovim tmux fzf stow ripgrep fd bat yabai skhd fastfetch pyenv rbenv nvm timewarrior ruff markdownlint-cli tinymist unzip pure
+```
 
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/augustinmuyl/dotfiles.git
-cd dotfiles
+git clone https://github.com/augustinmuyl/dotfiles.git ~/dev/dotfiles
+cd ~/dev/dotfiles
 ```
 
-### 2. Make `tmux` scripts executable
+### 2. Install Oh My Zsh
 
 ```bash
-chmod +x tmux/.ready-tmux
-chmod +x tmux/bin/ready-tmux
-chmod +x tmux/bin/setup-tmux-launchagent
-chmod +x tmux/bin/tmux-kill-sessions
-chmod +x tmux/bin/tmux-sessionizer
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
-### 3. Symlink the configs
+### 3. Make `tmux` scripts executable
+
+```bash
+chmod +x tmux/.ready-tmux tmux/bin/*
+```
+
+### 4. Symlink the configs
 
 ```bash
 stow -t ~ git nvim ruff skhd tmux yabai zsh ghostty
 ```
 
-### 4. Set up the LaunchAgent
+### 5. Set up the LaunchAgent
 
 ```bash
 ~/bin/setup-tmux-launchagent
