@@ -1,7 +1,9 @@
 return {
   'iamcco/markdown-preview.nvim',
   lazy = false,
-  build = function() vim.fn['mkdp#util#install']() end,
+  build = function()
+    vim.fn['mkdp#util#install'](1)
+  end,
   init = function()
     vim.g.mkdp_filetypes = { 'markdown' }
     vim.g.mkdp_echo_preview_url = 1
