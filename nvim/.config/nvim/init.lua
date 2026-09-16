@@ -358,6 +358,7 @@ require('lazy').setup({
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
+        { '<leader>b', group = '[B]reakpoint/Debug' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
@@ -539,6 +540,7 @@ require('lazy').setup({
           },
         },
         pyright = {},
+        clangd = {},
       }
 
       -- Map server names to their Mason package names
@@ -550,6 +552,7 @@ require('lazy').setup({
         ['css-lsp'] = 'cssls',
         ['eslint-lsp'] = 'eslint',
         ['pyright'] = 'pyright',
+        ['clangd'] = 'clangd',
       }
 
       -- Create ensure_installed list with Mason package names
@@ -945,7 +948,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
