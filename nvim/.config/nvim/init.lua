@@ -374,7 +374,6 @@ require('lazy').setup({
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
-    branch = '0.1.x',
     dependencies = {
       'nvim-lua/plenary.nvim',
       { -- If encountering errors, see telescope-fzf-native README for installation instructions
@@ -541,6 +540,19 @@ require('lazy').setup({
         },
         pyright = {},
         clangd = {},
+        texlab = {
+          settings = {
+            texlab = {
+              chktex = {
+                onOpenAndSave = true,
+                onEdit = false,
+                -- Warning 3: "Command terminated with space"
+                -- Warning 11: "You should use \ldots to achieve an ellipsis" (fires on \cdots too)
+                additionalArgs = { '-n3', '-n11' },
+              },
+            },
+          },
+        },
       }
 
       -- Map server names to their Mason package names
@@ -766,7 +778,9 @@ require('lazy').setup({
       -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
-      luasnip.config.setup {}
+      -- enable_autosnippets is needed for the Castel-style LaTeX math snippets
+      -- (custom/plugins/latex.lua) to auto-expand without a trigger keypress
+      luasnip.config.setup { enable_autosnippets = true }
 
       cmp.setup {
         snippet = {
@@ -835,6 +849,7 @@ require('lazy').setup({
             group_index = 0,
           },
           { name = 'nvim_lsp' },
+          { name = 'vimtex' }, -- inert outside .tex buffers, see custom/plugins/latex.lua
           { name = 'luasnip' },
           { name = 'path' },
           { name = 'nvim_lsp_signature_help' },
@@ -915,28 +930,27 @@ require('lazy').setup({
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    branch = 'main', -- 'main' is a full rewrite required for Neovim 0.12+; 'master' is frozen for 0.11
     build = ':TSUpdate',
-    main = 'nvim-treesitter.configs', -- Sets main module to use for opts
-    -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-    opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
-      -- Autoinstall languages that are not installed
-      auto_install = true,
-      highlight = {
-        enable = true,
-        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-        --  If you are experiencing weird indenting issues, add the language to
-        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-        additional_vim_regex_highlighting = { 'ruby' },
-      },
-      indent = { enable = true, disable = { 'ruby' } },
-    },
-    -- There are additional nvim-treesitter modules that you can use to interact
-    -- with nvim-treesitter. You should go explore a few and see what interests you:
-    --
-    --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-    --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-    --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+    lazy = false,
+    -- [[ Configure Treesitter ]] See the plugin's README for the 'main'-branch setup API
+    -- (no more `nvim-treesitter.configs`/`opts` -- highlighting and indent are wired up
+    -- directly through core `vim.treesitter`).
+    config = function()
+      local parsers = { 'bash', 'bibtex', 'c', 'diff', 'html', 'latex', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+      require('nvim-treesitter').install(parsers)
+
+      -- filetypes corresponding to the parsers above (query/luadoc/markdown_inline are
+      -- injection-only and have no buffer filetype of their own)
+      local filetypes = { 'sh', 'bib', 'c', 'diff', 'html', 'tex', 'plaintex', 'lua', 'markdown', 'vim', 'help' }
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = filetypes,
+        callback = function()
+          pcall(vim.treesitter.start)
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
+    end,
   },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
