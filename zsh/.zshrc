@@ -4,13 +4,6 @@
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Ruby PATH
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-
-# rbenv setup
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init - zsh)"
-
 # pyenv setup
 export PATH="$(pyenv root)/shims:$PATH"
 eval "$(pyenv init -)"

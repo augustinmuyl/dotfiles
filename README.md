@@ -6,9 +6,11 @@ A repo for my personal dotfiles setup.
 
 ```text
 .
+├── clang-format
 ├── ghostty
 ├── git
 ├── nvim
+├── prettier
 ├── ruff
 ├── scripts
 ├── skhd
@@ -35,7 +37,6 @@ To set up the environment on a new machine (macOS):
 - [`skhd`](https://github.com/koekeishiya/skhd)
 - [`fastfetch`](https://github.com/fastfetch-cli/fastfetch)
 - [`pyenv`](https://github.com/pyenv/pyenv)
-- [`rbenv`](https://github.com/rbenv/rbenv)
 - [`nvm`](https://github.com/nvm-sh/nvm)
 - [`timewarrior`](https://timewarrior.net/)
 - [`ruff`](https://docs.astral.sh/ruff/)
@@ -47,7 +48,7 @@ To set up the environment on a new machine (macOS):
 Install the command-line tools via [Homebrew](https://brew.sh/):
 
 ```bash
-brew install neovim tmux fzf stow ripgrep fd bat yabai skhd fastfetch pyenv rbenv nvm timewarrior ruff markdownlint-cli tinymist unzip pure
+brew install neovim tmux fzf stow ripgrep fd bat yabai skhd fastfetch pyenv nvm timewarrior ruff markdownlint-cli tinymist unzip pure
 ```
 
 ### 1. Clone the repo
@@ -72,7 +73,7 @@ chmod +x tmux/.ready-tmux tmux/bin/*
 ### 4. Symlink the configs
 
 ```bash
-stow -t ~ git nvim ruff skhd tmux yabai zsh ghostty
+stow -t ~ git nvim ruff skhd tmux yabai zsh ghostty prettier clang-format
 ```
 
 ### 5. Set up the LaunchAgent
